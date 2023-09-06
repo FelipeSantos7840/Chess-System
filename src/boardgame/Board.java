@@ -1,6 +1,6 @@
 package boardgame;
 
-import boardgame.exception.BoardException;
+import boardgame.exceptions.BoardException;
 
 public class Board {
     private int rows;
