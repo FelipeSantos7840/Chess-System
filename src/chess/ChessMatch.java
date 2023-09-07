@@ -46,7 +46,7 @@ public class ChessMatch {
 
     private void validateSourcePosition(Position position){
         if(!board.thereIsAPiece(position)){
-            throw new ChessException("Não existe peça nessa posição!");
+            throw new ChessException("Não existe peca nessa posicao!");
         }
     }
 

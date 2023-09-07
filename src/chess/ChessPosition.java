@@ -9,7 +9,7 @@ public class ChessPosition {
 
     public ChessPosition(Character column, Integer row) {
         if(column < 'a' || column > 'h' || row < 1 || row > 8){
-            throw new ChessException("Erro na inicialização do ChessPosition: Valor informado invalido!");
+            throw new ChessException("Erro na inicializacao do ChessPosition: Valor informado invalido!");
         }
         this.column = column;
         this.row = row;
