@@ -45,6 +45,12 @@ public class ChessMatch {
         return capturedPiece;
     }
 
+    public boolean[][] possibleMoves(ChessPosition sourcePosition){
+        Position position = sourcePosition.toPosition();
+        validateSourcePosition(position);
+        return board.piece(position).possibleMoves();
+    }
+
     private void validateSourcePosition(Position position){
         if(!board.thereIsAPiece(position)){
             throw new ChessException("Nao existe peca nessa posicao!");
