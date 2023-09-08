@@ -2,6 +2,7 @@ package chess;
 
 import boardgame.Board;
 import boardgame.Piece;
+import boardgame.Position;
 import chess.enums.Color;
 
 public abstract class ChessPieces extends Piece {
@@ -15,6 +16,11 @@ public abstract class ChessPieces extends Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    protected boolean isThereOpponentPiece(Position position){
+        ChessPieces piece = (ChessPieces) getBoard().piece(position);
+        return piece != null && piece.getColor() != this.color;
     }
 
 }
