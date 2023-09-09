@@ -8,10 +8,17 @@ import chess.exceptions.ChessException;
 import chess.pieces.King;
 import chess.pieces.Rook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChessMatch {
     private Board board;
     private Integer turn;
     private Color currentPlayer;
+
+    private List<Piece> piecesOnTheBoard = new ArrayList<>();
+    private List<Piece> piecesCaptured = new ArrayList<>();
+
 
     public ChessMatch(){
         turn = 1;
@@ -55,6 +62,11 @@ public class ChessMatch {
         Piece capturedPiece = board.removePiece(target); //REMOVE A POSSIVEL PEÇA QUE ESTEJA NO LOCAL DE DESTINO A CAPTURANDO
         board.placePiece(p,target);
 
+        if(capturedPiece != null){
+            piecesOnTheBoard.remove(capturedPiece);
+            piecesCaptured.add(capturedPiece);
+        }
+
         return capturedPiece;
     }
 
@@ -90,6 +102,7 @@ public class ChessMatch {
 
     private void placeNewPiece(char column, int row, ChessPieces piece){
         board.placePiece(piece,new ChessPosition(column,row).toPosition());
+        piecesOnTheBoard.add(piece);
     }
 
     private void InitialSetup(){
