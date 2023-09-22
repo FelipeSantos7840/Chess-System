@@ -47,6 +47,10 @@ public class ChessMatch {
         return mat;
     }
 
+    public boolean getCheck(){
+        return check;
+    }
+
     public ChessPieces performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition){
         //METODO COM OBJETIVO DE ORGANIZAR PARA MOVER A PEÇA
         Position source = sourcePosition.toPosition();
@@ -55,6 +59,14 @@ public class ChessMatch {
         validateTargetPosition(source,target);
 
         Piece capturedPiece = makeMove(source,target);
+
+        if(testCheck(currentPlayer)){
+            undoMove(source,target,capturedPiece);
+            throw new ChessException("Você não pode se colocar em Xeque!");
+        }
+
+        check = (testCheck(opponent(currentPlayer)));
+
         nextTurn();
         return (ChessPieces) capturedPiece;
     }
@@ -125,6 +137,19 @@ public class ChessMatch {
             }
         }
         throw new IllegalStateException("Não existe o rei " + color + " no tabuleiro!");
+    }
+
+    private boolean testCheck(Color color){
+        Position kingPosition = king(color).getChessPosition().toPosition();
+        for(Piece pieces : piecesOnTheBoard){
+            if(((ChessPieces)pieces).getColor() == opponent(color)){
+                boolean[][] possibleMovement = pieces.possibleMoves();
+                if(possibleMovement[kingPosition.getRow()][kingPosition.getColumn()] == true){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void placeNewPiece(char column, int row, ChessPieces piece){
