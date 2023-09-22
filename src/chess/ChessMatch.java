@@ -10,11 +10,13 @@ import chess.pieces.Rook;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChessMatch {
     private Board board;
     private Integer turn;
     private Color currentPlayer;
+    private boolean check;
 
     private List<Piece> piecesOnTheBoard = new ArrayList<>();
     private List<Piece> piecesCaptured = new ArrayList<>();
@@ -70,6 +72,17 @@ public class ChessMatch {
         return capturedPiece;
     }
 
+    private void undoMove(Position source,Position target, Piece capturedPiece){
+        Piece p = board.removePiece(target);
+        board.placePiece(p,source);
+
+        if(capturedPiece != null){
+            board.placePiece(capturedPiece,target);
+            piecesCaptured.remove(capturedPiece);
+            piecesOnTheBoard.add(capturedPiece);
+        }
+    }
+
     public boolean[][] possibleMoves(ChessPosition sourcePosition){
         Position position = sourcePosition.toPosition();
         validateSourcePosition(position);
@@ -98,6 +111,20 @@ public class ChessMatch {
     private void nextTurn(){
         turn++;
         currentPlayer = currentPlayer == Color.WHITE ? Color.BLACK : Color.WHITE;
+    }
+
+    private Color opponent(Color player){
+        return player == Color.WHITE ? Color.BLACK:Color.WHITE;
+    }
+
+    private ChessPieces king(Color color){
+        List<Piece> list = piecesOnTheBoard.stream().filter(x -> ((ChessPieces)x).getColor() == color).collect(Collectors.toList());
+        for(Piece p : list){
+            if(p instanceof King){
+                return (ChessPieces) p;
+            }
+        }
+        throw new IllegalStateException("Não existe o rei " + color + " no tabuleiro!");
     }
 
     private void placeNewPiece(char column, int row, ChessPieces piece){
