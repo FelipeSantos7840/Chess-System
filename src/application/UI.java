@@ -57,6 +57,9 @@ public class UI {
         System.out.println("----------------------------------------------");
         System.out.print("Turn: " + chessMatch.getTurn() + "\n");
         System.out.print("Current Player: " + chessMatch.getCurrentPlayer() + "\n");
+        if(chessMatch.getCheck()){
+            System.out.println("CHECK!");
+        }
         System.out.println("----------------------------------------------");
     }
 
