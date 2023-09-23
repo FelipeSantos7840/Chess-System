@@ -8,6 +8,7 @@ import chess.enums.Color;
 public abstract class ChessPieces extends Piece {
 
     private Color color;
+    private int moveCount;
 
     public ChessPieces(Board board, Color color) {
         super(board);
@@ -20,6 +21,18 @@ public abstract class ChessPieces extends Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    public int getMoveCount() {
+        return moveCount;
+    }
+
+    public void increaseMoveCount(){
+        moveCount++;
+    }
+
+    public void decreaseMoveCount(){
+        moveCount--;
     }
 
     protected boolean isThereOpponentPiece(Position position){
