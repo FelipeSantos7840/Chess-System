@@ -7,7 +7,6 @@ import chess.enums.Color;
 import chess.exceptions.ChessException;
 import chess.pieces.*;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -111,9 +110,6 @@ public class ChessMatch {
     public ChessPieces replacePromotedPiece(String type){
         if(promoted == null){
             throw new IllegalStateException("Não a peça para ser promovida!");
-        }
-        if (!type.equals("B") && !type.equals("N") && !type.equals("R") && !type.equals("Q")){
-            throw new InvalidParameterException("Tipo invalido para realizar a promoção!");
         }
 
         Position pos = promoted.getChessPosition().toPosition();
